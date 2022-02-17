@@ -3,8 +3,13 @@ import math
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from utils.general import non_max_suppression
 
+class FixedHardswish(nn.Hardswish):
+    # https://github.com/pytorch/pytorch/issues/46971
+    def forward(self, input):
+        return F.hardswish(input)
 
 def autopad(k, p=None):  # kernel, padding
     # Pad to 'same'
